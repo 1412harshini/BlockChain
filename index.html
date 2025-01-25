@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Scheduler</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .schedule { border: 1px solid #ccc; padding: 10px; margin-bottom: 20px; }
+        .event { padding: 10px; margin: 5px 0; border: 1px solid #ddd; background: #f9f9f9; }
+        .conflict { background: #fdd; }
+    </style>
+</head>
+<body>
+    <h1>Event Scheduler</h1>
+    <div>
+        <label>Name: <input id="name" type="text"></label>
+        <label>Start: <input id="start" type="time"></label>
+        <label>End: <input id="end" type="time"></label>
+        <button onclick="addEvent()">Add Event</button>
+    </div>
+    <div id="schedule" class="schedule"></div>
+
+    <script>
+        const schedule = [];
+
+        function addEvent() {
+            const name = document.getElementById("name").value;
+            const start = document.getElementById("start").value;
+            const end = document.getElementById("end").value;
+
+            const newEvent = { name, start, end };
+            schedule.push(newEvent);
+            displaySchedule();
+        }
+
+        function displaySchedule() {
+            const scheduleDiv = document.getElementById("schedule");
+            scheduleDiv.innerHTML = '';
+            schedule.sort((a, b) => a.start.localeCompare(b.start));
+
+            schedule.forEach(event => {
+                const div = document.createElement("div");
+                div.className = "event";
+                div.innerHTML = `${event.name} - ${event.start} to ${event.end}`;
+                scheduleDiv.appendChild(div);
+            });
+        }
+    </script>
+</body>
+</html>
